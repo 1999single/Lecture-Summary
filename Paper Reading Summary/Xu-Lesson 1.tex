@@ -1,0 +1,56 @@
+\documentclass[UTF-8]{ctexart}
+\CTEXsetup[format={\Large\bfseries}]{section}
+%调整文章页边距。很直观，底，顶，左、右的距离都可以调，nice。
+\usepackage[bottom=3.5cm,top=3.5cm,left=3cm,right=3cm]{geometry}
+%调整两列之间的间距
+% 这里是导言区、
+\title{Postgraduate Research Enhancement Program: Paper Reading}
+\author{许景星 \quad 华南师范大学}
+\date{2021.6.30}
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\clearpage
+
+\pagestyle{plain}
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\section{PAPER READING NOTES}
+
+\subsection{Neural Volumes: Learning Dynamic Renderable Volumes from Images}
+Mesh-based reconstruction and tracking has limitations for Modeling and rendering of dynamic scenes，To improve the modeling and rendering of dynamic scenes，this article proposes a learning-based method to represent dynamic objects.The approach is supervised directly from 2D images in a multi-view capture setting and does not require explicit reconstruction or tracking of the object. Author's method has two primary components: an encoder-decoder network that transforms input images into a 3D volume representation, and a differentiable ray-marching operation that enables end-to-end training.The encoder-decoder architecture learns a latent representation of a dynamic scene that enables us to produce novel content sequences not seen during training.To overcome memory limitations of voxel-based representations,Authors learn a dynamic irregular grid structure implemented with a warp field during ray-marching.\par
+
+Little of the interactive photo-real content available today is data-driven because many real-world phenomena are challenging to reconstruct and track with high fidelity.Since mesh-based representations rely heavily on the quality of reconstruction to produce compelling renderings,they are not suitable for handling complex situations.To address limitations posed by inaccurate geometric reconstructions, authors use machine learning to bridge the gap between the representation and observed images of the scene.In Lombardi et al.,this technique was used to great effect in modeling the human face,where it was demonstrated that a neural network can be trained to compensate for geometric reconstruction and tracking inaccuracies through a view-dependent texture.
+
+\subsection{NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis}
+This article presents a method that achieves state-of-the-art results for synthesizing novel views of complex scenes by optimizing an under lying continuous volumetric scene function using a sparse set of input views. Our algorithm represents a scene using a fully-connected deep network, whose input is a single continuous 5D coordinate (spatial location (x, y, z) and viewing direction ($\theta$, $\phi$)) and whose output is the volume density and view-dependent emitted radiance at that spatial location.\par
+
+To render this NeRF from a particular viewpoint authors: 1) march camera rays through the scene to generate a sampled set of 3D points, 2) use those points and their corresponding 2D viewing directions as input to the neural network to produce an output set of colors and densities, and 3) use classical volume rendering techniques to accumulate those colors and densities into a 2D image.\par
+
+Authors find that the basic implementation of optimizing a neural radiance field representation for a complex scene does not converge to a sufficiently high resolution representation and is inefficient in the required number of samples per camera ray. Authors address these issues by transforming input 5D coordinates with a positional encoding that enables the MLP to represent higher frequency functions, and we propose a hierarchical sampling procedure to reduce the number of queries required to adequately sample this high-frequency scene representation.
+
+\subsection{NEURAL VOLUME RENDERING: NERF AND BEYOND}
+This is a review paper. The larger field of Neural Rendering is defined by the excellent review paper by Tewari et al. as "deep image or video generation approaches that enable explicit or implicit control of scene properties.". It is a novel, data-driven solution to the long-standing problem in computer graphics of the realistic rendering of virtual worlds.\par
+
+Neural volume rendering refers to methods that generate images or video by tracing a ray into the scene and taking an integral of some sort over the length of the ray. Typically a neural network like a multi-layer perception encodes a function from the 3D coordinates on the ray to quantities like density and color, which are integrated to yield an image.\par
+
+A NeRF model stores a volumetric scene representation as the weights of an MLP, trained on many images with known pose. New views are rendered by integrating the density and color at regular intervals along each viewing ray. Although nerf has a very good response, there is still a lot of room for optimization in rendering efficiency, rendering conditions, lighting and scalability. Many links to papers on nerf optimization are also provided.
+
+\subsection{Mixture of Volumetric Primitives for Efficient Neural Rendering}
+The article points out that in the real-time rendering of human beings, the existing methods have shortcomings, such as triangle mesh have difficulty modeling this structures like hair, volumetric representatives like natural volumes are too low resolution given a reasonable memory budget, and high-resolution implicit representations like Neural Radiance Fields are too slow for use in real-time applications. So authors present Mixture of Volumetric Primitives (MVP), a representation for rendering dynamic 3D content that combines the completeness of volumetric representations with the efficiency of primitive-based rendering. \par
+
+Authors present Mixture of Volumetric Primitives (MVP), an approach designed to directly address the memory and compute limitations of existing volumetric methods, while maintaining their desirable properties of completeness and direct image-based supervision. It is comprised of a mixture of jointly-generated overlapping volumetric primitives that are selectively ray-marched, MVP leverages the conditional computation of ray-tracing to eliminate computation in empty regions of space.
+
+\subsection{Neural Body: Implicit Neural Representations with Structured Latent Codes for Novel View Synthesis of Dynamic Humans}
+Some recent works have shown that learning implicit neural representations of 3D scenes achieves remarkable view synthesis quality given dense input views. However, the representation learning will be ill-posed if the views are highly sparse. In order to solve this problem, authors introduce a novel implicit neural representation for dynamic humans, named Neural Body, to solve the challenge of novel view synthesis from sparse views. Using sparse view to reconstruct the model means that the cost of view collection can be reduced in practical application.\par
+
+Authors anchor a set of latent codes to the vertices of a deformable human model, namely that their spatial locations vary with the human pose. To obtain the 3D representation at a frame, authors first transform the code locations based on the human pose, which can be reliably estimated from sparse camera views. Then, a network is designed to regress the density and color for any 3D point based on these latent codes. Both the latent codes and the network are jointly learned from images of all video frames during the reconstruction process.
+
+\section{PAPER READING EXPERIENCE}
+Although there is no substantial academic progress in the paper reading this time, the progress (dare to step into the unknown field may also be regarded as progress) and gains are still very much. This is the first time I read a paper formally. For me, a scientific research idiot, the one that impresses me most is the paper "Neural Body: Implicit Neural Representations with Structured Latent Codes for Novel View Synthesis of Dynamic Humans" . Because my knowledge reserve is not enough, the keywords and example images in the paper can bring me a lot of help. The keywords in the paper provided me with key information such as the author's research content, the problems solved, and the technologies used. Example diagrams often show the content, methods, results, etc. of the research. For example, in Figure 1 in the paper, I can guess from it that the article may use multi-view video to generate a three-dimensional model of the corresponding frame. As shown in Figure 2, I can guess that the real graphics in the article may be rendered through the parametric model, which provided a great help for me to read this paper in general. The "5D coordinate" in the thesis "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis" brought me rich spatial imagination. Due to my ignorance of traditional rendering technology, I cannot appreciate its advantages. From the author's research process, the quality of a method lies not only in its rendering effect, but also in its rendering efficiency. From the paper "Mixture of Volumetric Primitives for Efficient Neural Rendering", I know that triangle mesh have difficulty modeling this structures like hair, volumetric representatives like natural volumes are too low resolution given a reasonable memory budget, and high-resolution implicit representations like Neural Radiance Fields are too slow for use in real-time applications. \par
+
+Through this study, I learned that the technical points in the paper are not all 0 to 1 development, more are 1 to 1.1, or even 1.05. As long as the research in the paper is true, innovative, and optimized, it may be included in a journal or magazine. As mentioned in "neural volume rendering: nerf and beyond", some papers improve the slow training and rendering time of the original nerf papers, use nerf in dynamic scenes, and reprocess the lighting in nerf This paper reading also learned that a paper is composed of abstracts, introductions, related work, and research results.\par
+
+Although I do not fully understand the technical points in the papers, I have learned from these papers that some terms that often appear in these rendering methods, such as ray tracing, MLP and Neural Rendering. I think I need to understand and learn what these terms represent in the next step. Meaning and related knowledge. In this study, I also touched the "Mendeley" document management tool and "LaTex" typesetting system. These tools can also improve my learning efficiency to some extent.
+\end{document}
