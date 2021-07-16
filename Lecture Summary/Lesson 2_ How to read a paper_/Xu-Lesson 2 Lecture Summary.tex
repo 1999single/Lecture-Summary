@@ -1,18 +1,64 @@
-\documentclass[UTF-8]{ctexart}
-\CTEXsetup[format={\Large\bfseries}]{section}
-\usepackage[bottom=3.5cm,top=3.5cm,left=3cm,right=3cm]{geometry}
+% v2-acmlarge-sample.tex, dated March 6 2012
+% This is a sample file for ACM large trim journals
+%
+% Compilation using 'acmlarge.cls' - version 1.3, Aptara Inc.
+% (c) 2011 Association for Computing Machinery (ACM)
+%
+% Questions/Suggestions/Feedback should be addressed to => "acmtexsupport@aptaracorp.com".
+% Users can also go through the FAQs available on the journal's submission webpage.
+%
+% Steps to compile: latex, bibtex, latex latex
+%
+\documentclass[prodmode,acmtap]{acmlarge}
+
+% Metadata Information
+\acmVolume{2}
+\acmNumber{3}
+\acmArticle{1}
+\articleSeq{1}
+\acmYear{2010}
+\acmMonth{5}
+
+% Package to generate and customize Algorithm as per ACM style
+\usepackage[ruled]{algorithm2e}
+\SetAlFnt{\algofont}
+\SetAlCapFnt{\algofont}
+\SetAlCapNameFnt{\algofont}
+\SetAlCapHSkip{0pt}
+\IncMargin{-\parindent}
+\renewcommand{\algorithmcfname}{ALGORITHM}
+
+% Page heads
+\markboth{D. Pineo, C. Ware and S. Fogarty}{Neural Modeling of Flow Rendering Effectiveness}
+
+% Title portion
 \title{Postgraduate Research Enhancement Program: Postgraduate study, research and career planning}
-\author{许景星 \quad 华南师范大学}
-\date{2021.7.2}
+\author{XuJingxing \affil{South China Normal University}}
+
+
+\begin{abstract}
+Researcher Li presided over the second lesson of the graduate research promotion plan-how to read a scientific paper. In the lecture, Researcher Li mainly discussed the types of scientific papers, the organizational structure of scientific papers and how to read a paper correctly.
+Scientific and technological papers include primary article and secondary literature. The primary article include original articles(information based on the original research), case reports (usually a single case), technical notes(describe specific technologies or programs)and secondary literature include review articles(Latest research and detailed analysis on specific topics), books, manuals, etc.
+A paper is composed of title and abstract, text, acknowledgments and references. The title briefly describes the subject of the paper; the abstract is a brief summary of the paper; the main body is the core part of the paper, which includes the introduction, methods, results, discussion, and summary.
+The paper can be read in three times. The first extensive reading takes 5 to 10 minutes, mainly reading the title, abstract, and introduction, reading the subtitles of each chapter, understanding the structure of the paper, reading methods, understanding the theoretical basis, and finally reading the results and conclusions; the second intensive reading It takes 60 minutes to view the chart in the paper, mark the references of interest for further reading, and mark the sentences with better expressions; reconstruct the paper for the third time, reproduce the experiment under the same assumptions or data. Compare the reproduced experimental results with the results of the paper, so as to discover the innovative points and hidden shortcomings of the paper.
+In short, when reading a paper, you must first understand the type of the paper, then through reading the title and abstract to understand the experimental objects, data, methods and other information, through the division of chapters to understand the organization of the paper. Then read each part of the paper in a reading order that suits you, and record the key information in the paper at the same time. Ask questions about the content of the paper, think about what the thesis mainly studies, what conclusions it has reached, what significance it has, and what problems still exist. Finally, check whether the data and experimental results of the paper support the conclusion, and whether the experiment has fatal flaws.
+
+\end{abstract}
+
+\category{H.5.2}{Information Interfaces and Presentation}{User
+Interfaces}[Evaluation/\break methodology]
+\category{H.1.2}{Models and Principles}{User/Machine Systems}[Human Information Processing]
+\category{I.5.1}{Pattern\break Recognition}{Models}[Neural Nets]
+
+\terms{Human Factors}
+\keywords{Contour perception, flow visualization, perceptual theory, visual cortex, visualization}
+
+\acmformat{Daniel Pineo, Colin Ware, and Sean Fogarty. 2010. Neural Modeling of Flow Rendering Effectiveness.}
 \begin{document}
+
+
 \maketitle
-\thispagestyle{empty}
-\clearpage
 
-\pagestyle{plain}
-\setcounter{page}{1}
-\pagenumbering{arabic}
-
-\section{Lecture Summary}
 
 \end{document}
+% End of v2-acmlarge-sample.tex (March 2012) - Gerry Murray, ACM
