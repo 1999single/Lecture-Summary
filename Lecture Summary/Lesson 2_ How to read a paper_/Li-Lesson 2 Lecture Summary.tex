@@ -1,19 +1,31 @@
-\documentclass[UTF-8]{ctexart}
-\CTEXsetup[format={\Large\bfseries}]{section}
-\usepackage[bottom=3.5cm,top=3.5cm,left=3cm,right=3cm]{geometry}
-\title{Postgraduate Research Enhancement Program: How to read a paper}
-\author{WeijieLi \quad 华南师范大学}
-\date{2021.7.7}
-\begin{document}
-\maketitle
-\thispagestyle{empty}
-\clearpage
+\documentclass[prodmode,acmtap]{acmlarge}
 
-\pagestyle{plain}
-\setcounter{page}{1}
-\pagenumbering{arabic}
+% Metadata Information
+\acmVolume{2}
+\acmNumber{3}
+\acmArticle{1}
+\articleSeq{1}
+\acmYear{2010}
+\acmMonth{5}
 
-\section{Lecture Summary}
+% Package to generate and customize Algorithm as per ACM style
+\usepackage[ruled]{algorithm2e}
+\SetAlFnt{\algofont}
+\SetAlCapFnt{\algofont}
+\SetAlCapNameFnt{\algofont}
+\SetAlCapHSkip{0pt}
+\IncMargin{-\parindent}
+\renewcommand{\algorithmcfname}{ALGORITHM}
+
+% Page heads
+% \markboth{D. Pineo, C. Ware and S. Fogarty}{Neural Modeling of Flow Rendering Effectiveness}
+
+% Title portion
+\title{Postgraduate Research Enhancement Program: How to read a scientific paper}
+\author{WeijieLi \affil{South China Normal University}}
+
+
+\begin{abstract}
 Professor Li Jingcong’s lecture title is: How to Read a Scientific Paper? 
 
 First of all, we must distinguish the types of documents. Generally, the types of documents can be divided into original documents and secondary documents. The original literature needs to focus on reading original papers, that is, information based on original research. The secondary literature focuses on review papers. By reading review papers, readers can understand the current research status, contradictions and gaps in the field. 
@@ -25,4 +37,22 @@ Professor Li took a paper on the reflection induction device of clothes hanger a
 The reading method recommended by Professor Li is: Extensive Reading + Intensive Reading + Reconstructing Papers. After the first reading, you should think about 5 C (Category, Context, Correctness, Contributions, Clarity). It may take a little longer to read the second time. You need to pay attention to the graphs and data in the text, and mark the points you don't understand to facilitate further investigation in the future. In addition, if there are relatively well-written sentences in the text, you can copy them for collection. The third time is to reconstruct the paper, reproduce the experiment with the same hypothesis (or data), and compare your own results with the results of the paper, which can not only deepen the experimental understanding, but also help discover the innovative points and hidden shortcomings of the paper. 
 
 There may be many difficulties in the process of reading. The professor hopes that the students can study repeatedly and try their best to overcome the difficulties. 
+\end{abstract}
+
+\category{H.5.2}{Information Interfaces and Presentation}{User
+Interfaces}[Evaluation/\break methodology]
+\category{H.1.2}{Models and Principles}{User/Machine Systems}[Human Information Processing]
+\category{I.5.1}{Pattern\break Recognition}{Models}[Neural Nets]
+
+\terms{Human Factors}
+\keywords{Contour perception, flow visualization, perceptual theory, visual cortex, visualization}
+
+\acmformat{Daniel Pineo, Colin Ware, and Sean Fogarty. 2010. Neural Modeling of Flow Rendering Effectiveness.}
+\begin{document}
+
+
+\maketitle
+
+
 \end{document}
+% End of v2-acmlarge-sample.tex (March 2012) - Gerry Murray, ACM

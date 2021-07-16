@@ -1,19 +1,31 @@
-\documentclass[UTF-8]{ctexart}
-\CTEXsetup[format={\Large\bfseries}]{section}
-\usepackage[bottom=3.5cm,top=3.5cm,left=3cm,right=3cm]{geometry}
+\documentclass[prodmode,acmtap]{acmlarge}
+
+% Metadata Information
+\acmVolume{2}
+\acmNumber{3}
+\acmArticle{1}
+\articleSeq{1}
+\acmYear{2010}
+\acmMonth{5}
+
+% Package to generate and customize Algorithm as per ACM style
+\usepackage[ruled]{algorithm2e}
+\SetAlFnt{\algofont}
+\SetAlCapFnt{\algofont}
+\SetAlCapNameFnt{\algofont}
+\SetAlCapHSkip{0pt}
+\IncMargin{-\parindent}
+\renewcommand{\algorithmcfname}{ALGORITHM}
+
+% Page heads
+% \markboth{D. Pineo, C. Ware and S. Fogarty}{Neural Modeling of Flow Rendering Effectiveness}
+
+% Title portion
 \title{Postgraduate Research Enhancement Program: Postgraduate study, research and career planning}
-\author{WeijieLi \quad 华南师范大学}
-\date{2021.7.2}
-\begin{document}
-\maketitle
-\thispagestyle{empty}
-\clearpage
+\author{WeijieLi \affil{South China Normal University}}
 
-\pagestyle{plain}
-\setcounter{page}{1}
-\pagenumbering{arabic}
 
-\section{Lecture Summary}
+\begin{abstract}
 The topic of Professor Liang's lecture is graduate career planning.It is very necessary to hold this lecture before prospective graduate students step into the door of scientific research. 
 
 First of all, the professor pointed out that the difference between postgraduates and undergraduates is that postgraduates should focus on the combination of research + innovation, rather than just stop at learning and application. Next, Professor Liang introduced the arrangements for each semester of graduate students, so that students have a simple understanding of their own learning route. 
@@ -23,6 +35,23 @@ The point is here. On how to conduct learning and research, Professor Liang gave
 Professor Liang suggested that students set some goals to motivate themselves to move forward. At the same time, time management must be done well. Communicate more with tutors and classmates, and extensively study the basic knowledge of the subject. 
 
 Finally, I would like to thank Professor Liang for his guidance. 
-% * <S Luo> 21:28:25 11 Jul 2021 UTC+0800:
-% This is a comment 备注一下
+
+\end{abstract}
+
+\category{H.5.2}{Information Interfaces and Presentation}{User
+Interfaces}[Evaluation/\break methodology]
+\category{H.1.2}{Models and Principles}{User/Machine Systems}[Human Information Processing]
+\category{I.5.1}{Pattern\break Recognition}{Models}[Neural Nets]
+
+\terms{Human Factors}
+\keywords{Contour perception, flow visualization, perceptual theory, visual cortex, visualization}
+
+\acmformat{Daniel Pineo, Colin Ware, and Sean Fogarty. 2010. Neural Modeling of Flow Rendering Effectiveness.}
+\begin{document}
+
+
+\maketitle
+
+
 \end{document}
+% End of v2-acmlarge-sample.tex (March 2012) - Gerry Murray, ACM
