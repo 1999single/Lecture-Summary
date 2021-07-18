@@ -1,0 +1,151 @@
+\documentclass[UTF8]{article}
+\usepackage{CTEX}
+\usepackage{bookmark}
+
+%opening
+\title{Notes on NeRF Papers and Lecture Summaries}
+\author{W. Li, J. Xu}
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+%\end{abstract}
+
+\section{Li's Notes on NeRF Papers}
+
+\subsection{NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis}
+This paper proposes that a sparse set of input views can be used to optimize a potential continuous volume scene function. The neural radiance fields is introduced to represent scene, which is a fully-connected deep neural network. Input a 5D coordinate into the network, and the output will be the volume density and the radiance related to the scene on the corresponding coordinate. Obviously, this 5D coordinate constitutes the concept of a 5D scene, which is a key factor in view synthesis. Different from the traditional 3D coordinates, the observation direction coordinates (θ, φ) are introduced into the 5D coordinates. Based on my current knowledge, it is like observing a point. Observing from multiple angles will more truly restore the real scene than observing from a single angle. For view synthesis, it should be the same. 
+
+Generate 5D coordinates with the help of camera rays, and use classic volume rendering techniques to generate 2D images. Of course, in order to reduce the error between the synthetic view and the real view, the entire process needs to use gradient descent to optimize the model. The author found that it is necessary to use positional encoding to transform the input 5D coordinates so that the multi-layer perceptron (MLP) can represent higher frequency functions. For this reason, they proposed a layered sampling process to improve the sampling efficiency of rendering. The current results have proved that the use of 5D neural radiance fields to represent the scene produces better results than traditional methods. However, the research on the effective optimization and rendering of the technology of the neural radiance fields still needs to be improved. When writing the weight of a scene in a deep neural network, we still don't know how to solve the problem of interpretability.
+
+\subsection{Neural Volume Rendering NeRF And Beyond}
+I understand this paper as an explanation and discussion of the above. In this paper, the neural volume rendering is explained once again: the method of generating images or videos by tracking the rays that enter the scene and performing certain integrals on the length of the rays. This is just a very popular explanation, and it has been explained in more detail above. This article will focus on the explanation, performance and application of neural volume rendering.
+
+First, four papers that use neural networks as scalar function approximators to define occupancy or signed distance functions are introduced. They are from 2019 CVPR and 2019 ICCV. There is also a series of articles based on the idea of implicit functions.
+
+Next, the author mentioned an article by Lombardi et al. in *the Neural Volumes paper*, which introduced volume rendering of view synthesis. Although it still achieved some success, it was still based on voxels identification. Perhaps the author's intention is to form an example of comparison with NeRF. So the following discussion goes to NeRF itself. One of the reasons NeRF is able to render very detailed is that it uses a periodic activation function to encode 3D points and related view directions on the rays. This innovation was later promoted to form SIREN (Sinusoidal Representation Network). But NeRF also has shortcomings: 1. Its training and rendering speed are too slow. 2. It can only represent static scenes. 3. There are requirements for lighting conditions. 4. The trained NeRF model cannot be applied to other scenes or objects. In response to this series of shortcomings, the author also gave some articles on improving them.
+
+Although neural volume rendering and NeRF-style articles have achieved some success, it is still unknown whether it will be competent in the end. Because there are still many interference factors in the real world. The author writes this article and hopes that those who are interested in research in this field can help, and hope that readers can maintain objective judgments. 
+
+\subsection{Neural Body: Implicit Neural Representations with Structured Latent Codes for Novel View Synthesis of Dynamic Humans}
+As mentioned in *Neural Volume Rendering NeRF And Beyond*, NeRF has excellent view synthesis capabilities. However, by representing the 3D scene as an implicit field of density and color, it relies on a highly dense input views on the one hand, and can only be applied to a static scene on the other hand. This paper proposes an implicit neural representation method based on structural latent code (Neural Body), which aims to solve the problem of sparse view synthesis and new view synthesis of dynamic humans. This technology can be applied to free-view video systems, and has low hardware requirements to reduce the cost of free-view video systems. The core of Neural Body is to anchor a set of latent codes on the vertices of the deformable human human model. In other words, their spatial positions transform the code positions according to the human body posture. Then, based on these latent codes, a network is designed to regress the density and color of any 3D point. This solves the shortcomings of the Lombardi team's research that the latent code is obtained independently, which leads to the lack of sufficient constraints for fusion across frames. The contributions of this paper are as follows: 1. The author proposes a new method that can synthesize new realistic views of performers in complex motion from sparse multi-viewpoint videos. 2. The author proposes Neural Body, a new type of implicit neural representation for dynamic human bodies, which enables us to effectively merge observations from video frames. 3. Compared with the previous work, the author's method has a significant performance improvement.
+
+\subsection{Neural Volumes: Learning Dynamic Renderable Volumes from Images}
+This paper is dedicated to solving the problem of modeling and rendering of dynamic scenes. In the face of complex scenes, traditional grid-based reconstruction and tracking methods are difficult to work. This paper proposes a learning-based method to represent dynamic objects. The unique feature is that this method is based on 2D image supervision in a multi-view capture design and does not require explicit reconstruction or tracking of objects. This method consists of an encoder-encoder network that converts the input image into a 3D volume representation and a distinguishable ray advance operation. In addition, the distortion field needs to be used to realize a dynamic irregular grid structure during the ray traveling. This structure can improve the apparent resolution and reduce grid-like artifacts and jagged motion. Ultimately, this technology can be used to help improve the problem of low interaction between objects in virtual reality modeling near-field scenes and users. Of course, the actual application scenarios are by no means limited to VR.
+
+\subsection{Mixture of Volumetric Primitives for Efficient Neural Rendering}
+In this paper, the author proposes the concept of Mixture Volumetric Primitives(MVP), which is mainly applied to human dynamic rendering. This is a representation used to render dynamic 3D content, which combines a representation based on volume and primitives. Although the NeRF proposed by Mildenhall et al. solves the resolution problem of compact representation, it can only be used to process static scenes. At the same time, the rendering time of MLP is too long when synthesizing a single high-resolution image. In this case, MVP can have a better performance. It solves the memory and calculation limitations of existing volumetric methods. This is a new voxel mesh motion model that can better cope with dynamic scenes. Moreover, it can train faster and render the learning model in real time.
+
+\section{Xu's Notes on NeRF Papers}
+\subsection{Neural Volumes: Learning Dynamic Renderable Volumes from Images}
+Mesh-based reconstruction and tracking has limitations for Modeling and rendering of dynamic scenes，To improve the modeling and rendering of dynamic scenes，this article proposes a learning-based method to represent dynamic objects.The approach is supervised directly from 2D images in a multi-view capture setting and does not require explicit reconstruction or tracking of the object. Author's method has two primary components: an encoder-decoder network that transforms input images into a 3D volume representation, and a differentiable ray-marching operation that enables end-to-end training.The encoder-decoder architecture learns a latent representation of a dynamic scene that enables us to produce novel content sequences not seen during training.To overcome memory limitations of voxel-based representations,Authors learn a dynamic irregular grid structure implemented with a warp field during ray-marching.
+
+Little of the interactive photo-real content available today is data-driven because many real-world phenomena are challenging to reconstruct and track with high fidelity.Since mesh-based representations rely heavily on the quality of reconstruction to produce compelling renderings,they are not suitable for handling complex situations.To address limitations posed by inaccurate geometric reconstructions, authors use machine learning to bridge the gap between the representation and observed images of the scene.In Lombardi et al.,this technique was used to great effect in modeling the human face,where it was demonstrated that a neural network can be trained to compensate for geometric reconstruction and tracking inaccuracies through a view-dependent texture.
+
+\subsection{NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis}
+This article presents a method that achieves state-of-the-art results for synthesizing novel views of complex scenes by optimizing an under lying continuous volumetric scene function using a sparse set of input views. Our algorithm represents a scene using a fully-connected deep network, whose input is a single continuous 5D coordinate (spatial location (x, y, z) and viewing direction ($\theta$, $\phi$)) and whose output is the volume density and view-dependent emitted radiance at that spatial location.
+
+To render this NeRF from a particular viewpoint authors: 1) march camera rays through the scene to generate a sampled set of 3D points, 2) use those points and their corresponding 2D viewing directions as input to the neural network to produce an output set of colors and densities, and 3) use classical volume rendering techniques to accumulate those colors and densities into a 2D image.
+
+Authors find that the basic implementation of optimizing a neural radiance field representation for a complex scene does not converge to a sufficiently high resolution representation and is inefficient in the required number of samples per camera ray. Authors address these issues by transforming input 5D coordinates with a positional encoding that enables the MLP to represent higher frequency functions, and we propose a hierarchical sampling procedure to reduce the number of queries required to adequately sample this high-frequency scene representation.
+
+\subsection{NEURAL VOLUME RENDERING: NERF AND BEYOND}
+This is a review paper. The larger field of Neural Rendering is defined by the excellent review paper by Tewari et al. as "deep image or video generation approaches that enable explicit or implicit control of scene properties.". It is a novel, data-driven solution to the long-standing problem in computer graphics of the realistic rendering of virtual worlds.
+
+Neural volume rendering refers to methods that generate images or video by tracing a ray into the scene and taking an integral of some sort over the length of the ray. Typically a neural network like a multi-layer perception encodes a function from the 3D coordinates on the ray to quantities like density and color, which are integrated to yield an image.
+
+A NeRF model stores a volumetric scene representation as the weights of an MLP, trained on many images with known pose. New views are rendered by integrating the density and color at regular intervals along each viewing ray. Although nerf has a very good response, there is still a lot of room for optimization in rendering efficiency, rendering conditions, lighting and scalability. Many links to papers on nerf optimization are also provided.
+
+\subsection{Mixture of Volumetric Primitives for Efficient Neural Rendering}
+The article points out that in the real-time rendering of human beings, the existing methods have shortcomings, such as triangle mesh have difficulty modeling this structures like hair, volumetric representatives like natural volumes are too low resolution given a reasonable memory budget, and high-resolution implicit representations like Neural Radiance Fields are too slow for use in real-time applications. So authors present Mixture of Volumetric Primitives (MVP), a representation for rendering dynamic 3D content that combines the completeness of volumetric representations with the efficiency of primitive-based rendering. 
+
+Authors present Mixture of Volumetric Primitives (MVP), an approach designed to directly address the memory and compute limitations of existing volumetric methods, while maintaining their desirable properties of completeness and direct image-based supervision. It is comprised of a mixture of jointly-generated overlapping volumetric primitives that are selectively ray-marched, MVP leverages the conditional computation of ray-tracing to eliminate computation in empty regions of space.
+
+\subsection{Neural Body: Implicit Neural Representations with Structured Latent Codes for Novel View Synthesis of Dynamic Humans}
+Some recent works have shown that learning implicit neural representations of 3D scenes achieves remarkable view synthesis quality given dense input views. However, the representation learning will be ill-posed if the views are highly sparse. In order to solve this problem, authors introduce a novel implicit neural representation for dynamic humans, named Neural Body, to solve the challenge of novel view synthesis from sparse views. Using sparse view to reconstruct the model means that the cost of view collection can be reduced in practical application.
+
+Authors anchor a set of latent codes to the vertices of a deformable human model, namely that their spatial locations vary with the human pose. To obtain the 3D representation at a frame, authors first transform the code locations based on the human pose, which can be reliably estimated from sparse camera views. Then, a network is designed to regress the density and color for any 3D point based on these latent codes. Both the latent codes and the network are jointly learned from images of all video frames during the reconstruction process.
+
+\subsection{PAPER READING SUMMARY}
+Although there is no substantial academic progress in the paper reading this time, the progress (dare to step into the unknown field may also be regarded as progress) and gains are still very much. This is the first time I read a paper formally. For me, a scientific research idiot, the one that impresses me most is the paper "Neural Body: Implicit Neural Representations with Structured Latent Codes for Novel View Synthesis of Dynamic Humans" . Because my knowledge reserve is not enough, the keywords and example images in the paper can bring me a lot of help. The keywords in the paper provided me with key information such as the author's research content, the problems solved, and the technologies used. Example diagrams often show the content, methods, results, etc. of the research. For example, in Figure 1 in the paper, I can guess from it that the article may use multi-view video to generate a three-dimensional model of the corresponding frame. As shown in Figure 2, I can guess that the real graphics in the article may be rendered through the parametric model, which provided a great help for me to read this paper in general. The "5D coordinate" in the thesis "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis" brought me rich spatial imagination. Due to my ignorance of traditional rendering technology, I cannot appreciate its advantages. From the author's research process, the quality of a method lies not only in its rendering effect, but also in its rendering efficiency. From the paper "Mixture of Volumetric Primitives for Efficient Neural Rendering", I know that triangle mesh have difficulty modeling this structures like hair, volumetric representatives like natural volumes are too low resolution given a reasonable memory budget, and high-resolution implicit representations like Neural Radiance Fields are too slow for use in real-time applications. 
+
+Through this study, I learned that the technical points in the paper are not all 0 to 1 development, more are 1 to 1.1, or even 1.05. As long as the research in the paper is true, innovative, and optimized, it may be included in a journal or magazine. As mentioned in "neural volume rendering: nerf and beyond", some papers improve the slow training and rendering time of the original nerf papers, use nerf in dynamic scenes, and reprocess the lighting in nerf This paper reading also learned that a paper is composed of abstracts, introductions, related work, and research results.
+
+Although I do not fully understand the technical points in the papers, I have learned from these papers that some terms that often appear in these rendering methods, such as ray tracing, MLP and Neural Rendering. I think I need to understand and learn what these terms represent in the next step. Meaning and related knowledge. In this study, I also touched the "Mendeley" document management tool and "LaTex" typesetting system. These tools can also improve my learning efficiency to some extent.
+
+\section{Li's Lecture Summaries}
+\subsection{Lecture 1}
+The topic of Professor Liang's lecture is graduate career planning.It is very necessary to hold this lecture before prospective graduate students step into the door of scientific research. 
+
+First of all, the professor pointed out that the difference between postgraduates and undergraduates is that postgraduates should focus on the combination of research + innovation, rather than just stop at learning and application. Next, Professor Liang introduced the arrangements for each semester of graduate students, so that students have a simple understanding of their own learning route. 
+
+The point is here. On how to conduct learning and research, Professor Liang gave a suggestion: read a lot of literature. There are different requirements in different periods. In the early stage, I have contact with review-type literature. The language is mainly in my mother tongue, which can help me adapt to the rhythm. At the stage of in-depth study, you should get in touch with some English literature, especially classic literature from authoritative journals. Of course, just staying at the reading stage is not enough. If you want to make a breakthrough, you must reproduce the literature to get a clearer understanding of the advantages and disadvantages of the literature. 
+
+Professor Liang suggested that students set some goals to motivate themselves to move forward. At the same time, time management must be done well. Communicate more with tutors and classmates, and extensively study the basic knowledge of the subject. 
+
+Finally, I would like to thank Professor Liang for his guidance.
+
+\subsection{Lecture 2}
+Professor Li Jingcong’s lecture title is: How to Read a Scientific Paper? 
+
+First of all, we must distinguish the types of documents. Generally, the types of documents can be divided into original documents and secondary documents. The original literature needs to focus on reading original papers, that is, information based on original research. The secondary literature focuses on review papers. By reading review papers, readers can understand the current research status, contradictions and gaps in the field. 
+
+Next, the professor introduced the organizational structure of scientific papers. The first is Title\&Abstract. Then there is the Main Body, which can be subdivided into 5 parts: Introduction, Methods, Results, Discussion, Conclusion. Finally, Acknowledgements\&References.
+
+Professor Li took a paper on the reflection induction device of clothes hanger as an example to guide students to further understand the structure of the paper and explain the details that need to be paid attention to in each part. 
+
+The reading method recommended by Professor Li is: Extensive Reading + Intensive Reading + Reconstructing Papers. After the first reading, you should think about 5 C (Category, Context, Correctness, Contributions, Clarity). It may take a little longer to read the second time. You need to pay attention to the graphs and data in the text, and mark the points you don't understand to facilitate further investigation in the future. In addition, if there are relatively well-written sentences in the text, you can copy them for collection. The third time is to reconstruct the paper, reproduce the experiment with the same hypothesis (or data), and compare your own results with the results of the paper, which can not only deepen the experimental understanding, but also help discover the innovative points and hidden shortcomings of the paper. 
+
+There may be many difficulties in the process of reading. The professor hopes that the students can study repeatedly and try their best to overcome the difficulties. 
+
+\subsection{Lecture 3}
+The topic of Professor Wang Fei's lecture is how to find and management research literature.
+
+The first is how to find documents. Commonly used Chinese databases include CNKI and Wanfang, and English databases include Google Scholar, Web of Science and EI (Engineering Index). The school library system usually provides access to the above databases so that students can find materials. It is worth noting that you cannot add redundant keywords when using Google Scholar, otherwise it will have a greater impact on the search results. 
+
+The second is about how to select documents. Professor Wang Fei focused on the points that should be paid attention to when selecting documents in SCI journals. For example, the SCI impact factor (Impact Factor) can reflect the influence of the journal to a certain extent. In addition, partitioning according to SCI can help us search for high-quality documents more quickly. 
+
+Next, Professor Wang Fei introduced several paper management tools to us. For example, Excel (many people did not expect that this commonly used software can also be used to manage papers), endnote, mendeley, Zotero, NoteExpress. The professor used Zotero for a document management demonstration. What you can see is that Zotero is really convenient to use, and I personally prefer to use Zotero. 
+
+Finally, Mr. Wang Fei emphasized the precautions for citing documents when submitting the paper. In fact, I believe everyone has a certain understanding in the graduation project. It should be noted that when submitting the manuscript, it needs to be written in accordance with the standards of the journal, otherwise it is easy to be returned. 
+
+In short, I am very grateful to Professor Wang Fei for his guidance. 
+
+\subsection{Lecture 4} 
+
+\section{Xu's Lecture Summaries}
+
+\subsection{Lecture 1}
+Professor Liang presided over the first lesson of the 2021 graduate research promotion plan-the study, research and career planning of graduate students. In the lecture, Professor Liang mainly discussed the difference between postgraduates and undergraduates, how to study and research, and how to make postgraduate careers more fulfilling.
+
+First of all, the task of graduate students is different from that of undergraduates in that the task of undergraduates is learning and application, while the task of graduate students is research and innovation. In order to produce innovative results, graduate students need to cultivate their own research and innovation capabilities.
+
+Secondly, the primary task of learning and research is to read the literature. Reading a lot of literature and monographs in this subject and interdisciplinary is the foundation of research and innovation. In the initial stage of research, we can read the review paper first and then the monograph, and we can read the Chinese paper first and then the English paper. In the in-depth research stage, English literature should be mainly read, and the literature with high number of citations, high impact factors and relatively new ones should be given priority. During the reading of the paper, we should pay attention to summarizing the innovative points in the paper, and reproduce the paper as much as possible if conditions permit.
+
+Finally, formulate the three-year general goal and annual small goals for graduate students, such as a project, an SCI paper, a competition, and participation in undergraduate guidance work. I personally think that the goal setting is not only related to graduation conditions, but also needs to be combined with one's future development direction (work, Ph.D. or entrepreneurship).
+
+I hope I can find my interested and suitable research direction as soon as possible in the process of reading papers and learning technology in the summer.
+
+\subsection{Lecture 2}
+Researcher Li presided over the second lesson of the graduate research promotion plan-how to read a scientific paper. In the lecture, Researcher Li mainly discussed the types of scientific papers, the organizational structure of scientific papers and how to read a paper correctly.
+Scientific and technological papers include primary article and secondary literature. The primary article include original articles(information based on the original research), case reports (usually a single case), technical notes(describe specific technologies or programs)and secondary literature include review articles(Latest research and detailed analysis on specific topics), books, manuals, etc.
+
+A paper is composed of title and abstract, text, acknowledgments and references. The title briefly describes the subject of the paper; the abstract is a brief summary of the paper; the main body is the core part of the paper, which includes the introduction, methods, results, discussion, and summary.
+
+The paper can be read in three times. The first extensive reading takes 5 to 10 minutes, mainly reading the title, abstract, and introduction, reading the subtitles of each chapter, understanding the structure of the paper, reading methods, understanding the theoretical basis, and finally reading the results and conclusions; the second intensive reading It takes 60 minutes to view the chart in the paper, mark the references of interest for further reading, and mark the sentences with better expressions; reconstruct the paper for the third time, reproduce the experiment under the same assumptions or data. Compare the reproduced experimental results with the results of the paper, so as to discover the innovative points and hidden shortcomings of the paper.
+
+In short, when reading a paper, you must first understand the type of the paper, then through reading the title and abstract to understand the experimental objects, data, methods and other information, through the division of chapters to understand the organization of the paper. Then read each part of the paper in a reading order that suits you, and record the key information in the paper at the same time. Ask questions about the content of the paper, think about what the thesis mainly studies, what conclusions it has reached, what significance it has, and what problems still exist. Finally, check whether the data and experimental results of the paper support the conclusion, and whether the experiment has fatal flaws.
+
+\subsection{Lecture 3}
+Researcher Wang presided over the third lesson of the graduate research promotion plan-how to find and manage research literature. In the lecture, Researcher Wang mainly discussed how to find, select and manage literature.
+In terms of searching for literatures, common Chinese databases include CNKI and Wanfang, and English databases include Google Scholar, Web of Science and Engineering Index. When searching for a specific paper, you only need to search for the full name of the paper, but when searching for a certain type of paper, you need to search by keywords.
+
+In terms of selecting literatures, journals are classified into Science Citation Index, Engineering Index and Conference. Professor Wang briefly introduced the impact factor. The impact factor can reflect the influence of a journal to a certain extent. Later, Researcher Wang also demonstrated how to use Web of Science to find papers.
+
+In terms of literature management, it mainly introduces document management software. Common document management software includes Excel, EndNote, Mendeley, Zotero, NoteExpress, etc. Most document management software has the ability to extract document type, author, year, abstract and other information, and also provide some classification and labeling functions. At the end, Researcher Wang also demonstrated how to insert references. The format of references needs to be processed according to the requirements of the journal, so it is also very error-prone.
+
+\subsection{Lecture 4} 
+
+\end{document}
